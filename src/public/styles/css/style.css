@@ -1,0 +1,1164 @@
+.settings main section.account-settings > div .left p:not(:empty), .profile-cover .bio p:not(:empty), .posts .post-content p:not(:empty), .comments-list .comment-content p {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.settings .edit-popup, .popup-format, .confirmation-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% - 60px)) scale(0.9);
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 4;
+  transition: all 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.settings .active.edit-popup, .active.popup-format, .active.confirmation-popup {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Quicksand", "Almarai";
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #222222;
+  color: white;
+  min-height: 100vh;
+}
+
+button:disabled {
+  pointer-events: none !important;
+  opacity: 0.4 !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: crimson;
+  border-radius: 3px;
+}
+
+.darken {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.darken.active {
+  z-index: 3;
+  opacity: 1;
+}
+
+.popup-format {
+  width: 400px;
+  height: calc(80vh - 20px);
+  background-color: #1d1d1d;
+}
+.popup-format-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 0 10px;
+  padding-bottom: 10px;
+  flex: 0 1 auto;
+}
+.popup-format-header h4 a {
+  color: crimson;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.popup-format-header h4 a:hover {
+  opacity: 0.7;
+}
+.popup-format-header i {
+  font-size: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.popup-format-header i:hover {
+  opacity: 0.7;
+}
+
+.confirmation-popup {
+  background-color: #1d1d1d;
+  width: 260px;
+}
+.confirmation-popup .content {
+  font-size: 20px;
+  text-align: center;
+}
+.confirmation-popup .btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.confirmation-popup .btns button {
+  margin: 0 10px;
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  padding: 6px;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.confirmation-popup .btns button:hover {
+  opacity: 0.7;
+}
+.confirmation-popup .btns button.confirm {
+  background-color: rgb(0, 126, 185);
+}
+.confirmation-popup .btns button.disprove {
+  background-color: crimson;
+}
+
+.error-field {
+  color: crimson;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 20px;
+  width: calc(100% - 40px);
+  margin: auto;
+}
+header .flex-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex: 1;
+}
+header .brand-name {
+  color: crimson;
+  text-decoration: none;
+}
+header .search-bar {
+  background-color: white;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+header .search-bar input {
+  border: none;
+  outline: none;
+  font-size: 18px;
+}
+header .search-bar i {
+  color: black;
+}
+header .current-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: relative;
+  cursor: pointer;
+}
+header .current-user .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 6px;
+  overflow: hidden;
+}
+header .current-user .avatar img {
+  width: 100%;
+}
+header .current-user p {
+  font-size: 18px;
+  user-select: none;
+}
+header .current-user .menu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(calc(100% + 10px));
+  width: 100%;
+  height: 0;
+  border-radius: 8px;
+  background-color: #1a1a1a;
+  z-index: 2;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+header .current-user .menu.active {
+  height: 120px;
+}
+header .current-user .menu ul li {
+  list-style: none;
+}
+header .current-user .menu ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 10px 0;
+  display: block;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+header .current-user .menu ul li a:hover {
+  background-color: #151515;
+}
+
+.login body,
+.signup body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.login body h1,
+.signup body h1 {
+  color: crimson;
+  font-size: 60px;
+  margin-bottom: 40px;
+}
+.login body form,
+.signup body form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  row-gap: 20px;
+  width: 300px;
+}
+.login body form h2,
+.signup body form h2 {
+  color: crimson;
+  font-size: 30px;
+  align-self: flex-start;
+}
+.login body form .error-field,
+.signup body form .error-field {
+  margin: -10px 0;
+}
+.login body form .error-field:not(:empty),
+.signup body form .error-field:not(:empty) {
+  font-weight: bold;
+  background-color: #f594a7;
+  padding: 10px;
+  width: calc(100% - 20px);
+  text-align: center;
+  border-radius: 5px;
+  margin: 0;
+}
+.login body form input,
+.login body form button,
+.signup body form input,
+.signup body form button {
+  padding: 10px;
+  font-size: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+.login body form button,
+.signup body form button {
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: crimson;
+  color: white;
+}
+.login body form button:hover,
+.signup body form button:hover {
+  background-color: #ad102f;
+}
+.login body form a,
+.signup body form a {
+  color: crimson;
+}
+
+.posts-wrapper {
+  width: 50%;
+  max-width: 600px;
+  margin: auto;
+  padding: 50px 0;
+}
+
+.posts .post {
+  width: calc(90% - 40px);
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  margin: auto;
+  margin-bottom: 30px;
+  padding: 20px;
+}
+.posts .post:last-child {
+  margin-bottom: 0;
+}
+.posts .post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.posts .post-header .poster-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  color: white;
+  text-decoration: none;
+  width: fit-content;
+}
+.posts .post-header .poster-info .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 6px;
+  overflow: hidden;
+}
+.posts .post-header .poster-info .avatar img {
+  width: 100%;
+}
+.posts .post-header .poster-info p {
+  font-size: 18px;
+}
+.posts .post-header .posted-at {
+  color: rgba(255, 255, 255, 0.6);
+}
+.posts .post-content p:not(:empty) {
+  font-size: 20px;
+  padding: 10px;
+}
+.posts .post-content img {
+  width: calc(80% - 20px);
+  display: block;
+  margin: 10px auto;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.posts .post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  font-size: 20px;
+}
+.posts .post-footer .reactions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: fit-content;
+}
+.posts .post-footer .post-btn-format {
+  border: none;
+  outline: none;
+  font-size: 20px;
+  background-color: transparent;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.posts .post-footer .post-btn-format i {
+  padding: 0 5px;
+}
+.posts .post-footer .post-btn-format.likes {
+  color: #00b3ff;
+}
+.posts .post-footer .post-btn-format.likes:hover {
+  color: white;
+  background-color: #66d1ff;
+}
+.posts .post-footer .post-btn-format.likes.active {
+  color: white;
+  background-color: #66d1ff;
+}
+.posts .post-footer .post-btn-format.dislikes {
+  color: #ff7700;
+}
+.posts .post-footer .post-btn-format.dislikes:hover {
+  color: white;
+  background-color: #ffad66;
+}
+.posts .post-footer .post-btn-format.dislikes.active {
+  color: white;
+  background-color: #ffad66;
+}
+.posts .post-footer .post-btn-format.comments-btn {
+  color: #00ff00;
+}
+.posts .post-footer .post-btn-format.comments-btn:hover {
+  color: white;
+  background-color: #66ff66;
+}
+.posts .post-footer .post-btn-format.comments-btn.active {
+  color: white;
+  background-color: #66ff66;
+}
+
+.comments {
+  display: flex;
+  justify-content: center;
+  align-items: stretched;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.comments-list {
+  flex: 1 1 auto;
+  overflow: hidden auto;
+  scroll-behavior: smooth;
+}
+.comments-list .comment {
+  background-color: #151515;
+  padding: 10px;
+  border-radius: 6px;
+  width: calc(100% - 30px);
+  margin-bottom: 10px;
+}
+.comments-list .comment:last-child {
+  margin-bottom: 0;
+}
+.comments-list .comment-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: fit-content;
+  color: white;
+  text-decoration: none;
+}
+.comments-list .comment-header .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 6px;
+  overflow: hidden;
+}
+.comments-list .comment-header .avatar img {
+  width: 100%;
+}
+.comments-list .comment-content p {
+  padding: 10px;
+}
+.comments-list .comment-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  color: rgba(255, 255, 255, 0.6);
+}
+.comments-footer {
+  flex: 0 1 auto;
+  width: calc(100% - 26px);
+  padding: 20px 0;
+  padding-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+.comments-footer .disabled-msg {
+  display: none;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+.comments-footer .disabled-msg a {
+  color: crimson;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.comments-footer .disabled-msg a:hover {
+  opacity: 0.7;
+}
+.comments-footer .comment-input-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.comments-footer.disabled-commenting .disabled-msg {
+  display: block;
+}
+.comments-footer.disabled-commenting .comment-input-section {
+  display: none;
+}
+.comments-footer textarea,
+.comments-footer button {
+  border: none;
+  outline: none;
+  height: 30px;
+  font-size: 20px;
+  display: block;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.comments-footer textarea {
+  box-sizing: border-box;
+  background-color: #151515;
+  color: white;
+  width: 70%;
+  min-height: 30px;
+  max-height: 114px;
+  line-height: 30px;
+  resize: none;
+}
+.comments-footer button {
+  box-sizing: content-box;
+  background-color: crimson;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.comments-footer button:hover {
+  opacity: 0.7;
+}
+
+.post-popup-btn {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  display: block;
+  margin: auto;
+  margin-bottom: 40px;
+  padding: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: crimson;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.post-popup-btn:hover {
+  transform: scale(1.05);
+}
+
+.post-popup {
+  height: auto;
+  padding-bottom: 20px;
+}
+.post-popup-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.post-popup-content textarea,
+.post-popup-content button {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+}
+.post-popup-content .post-input {
+  width: 80%;
+  background-color: #151515;
+  resize: none;
+  min-height: 120px;
+  font-size: 20px;
+}
+.post-popup-content .file-upload {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 30px 0;
+}
+.post-popup-content .file-upload .post-file-upload-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: transparent;
+  border: 3px solid white;
+  font-size: 60px;
+  width: 140px;
+  height: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.post-popup-content .file-upload .post-file-upload-label.asided {
+  transform: scale(0.5);
+}
+.post-popup-content .file-upload .post-file-upload-label:hover {
+  opacity: 0.7;
+}
+.post-popup-content .file-upload .post-file-upload {
+  display: none;
+}
+.post-popup-content .file-upload .file-preview {
+  width: 160px;
+  border-radius: 10px;
+  display: none;
+}
+.post-popup-content .file-upload .file-preview.active {
+  display: block;
+}
+.post-popup-content .publish-post-btn {
+  background-color: crimson;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.post-popup-content .publish-post-btn:hover {
+  opacity: 0.7;
+}
+
+.context-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #151515;
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.context-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.context-menu button {
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.context-menu button:hover {
+  background-color: #1a1a1a;
+}
+
+.profile-cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-top: 40px;
+}
+.profile-cover .avatar-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile-cover .avatar-wrapper .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  margin-right: 0;
+  overflow: hidden;
+}
+.profile-cover .avatar-wrapper .avatar img {
+  width: 100%;
+}
+.profile-cover .avatar-wrapper .edit-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-size: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  opacity: 0;
+  cursor: pointer;
+}
+.profile-cover .avatar-wrapper .edit-avatar:hover {
+  opacity: 1;
+}
+.profile-cover .avatar-wrapper .avatar-input {
+  display: none;
+}
+.profile-cover .profile-username {
+  padding-top: 10px;
+}
+.profile-cover .account-birth,
+.profile-cover .account-followers {
+  padding: 5px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.profile-cover .account-birth .followers-number,
+.profile-cover .account-followers .followers-number {
+  color: white;
+}
+.profile-cover .account-birth .requests-page-btn,
+.profile-cover .account-followers .requests-page-btn {
+  color: crimson;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.profile-cover .account-birth .requests-page-btn:hover,
+.profile-cover .account-followers .requests-page-btn:hover {
+  opacity: 1;
+}
+.profile-cover .bio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.profile-cover .bio p:not(:empty) {
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+.profile .follow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-top: 30px;
+}
+.profile .follow.followed .unfollow-btn {
+  display: block;
+}
+.profile .follow.unfollowed .follow-btn {
+  display: block;
+}
+.profile .follow.pending .cancel-btn {
+  display: block;
+}
+.profile .follow button {
+  padding: 10px;
+  min-width: 140px;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  color: white;
+  display: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.profile .follow button.follow-btn {
+  background-color: #00b8b8;
+}
+.profile .follow button.unfollow-btn {
+  background-color: crimson;
+}
+.profile .follow button.cancel-btn {
+  background-color: rgb(226, 189, 0);
+}
+.profile .follow button:hover {
+  opacity: 0.7;
+}
+
+.settings main {
+  width: 50%;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 50px;
+}
+.settings main section {
+  margin-bottom: 40px;
+}
+.settings main section h2 {
+  font-size: 34px;
+}
+.settings main section > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 10px 30px;
+  border-radius: 10px;
+  background-color: #3c3c3c;
+  overflow: hidden;
+}
+.settings main section > div .left {
+  padding: 10px;
+}
+.settings main section.account-settings > div .left {
+  width: calc(100% - 60px);
+}
+.settings main section.account-settings > div .left p:not(:empty) {
+  padding-top: 5px;
+}
+.settings main section.account-settings > div .right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 60px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.settings main section.account-settings > div .right:hover {
+  opacity: 0.6;
+}
+.settings main section.account-settings > div.bio-settings .left p {
+  text-align: center;
+}
+.settings main section.account-settings > div.avatar-settings {
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 10px;
+}
+.settings main section.account-settings > div.avatar-settings .avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin-right: 0;
+  overflow: hidden;
+  position: relative;
+  margin: 40px auto;
+}
+.settings main section.account-settings > div.avatar-settings .avatar-wrapper img {
+  width: 100%;
+}
+.settings main section.account-settings > div.avatar-settings .avatar-wrapper .edit-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-size: 36px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  opacity: 0;
+  cursor: pointer;
+}
+.settings main section.account-settings > div.avatar-settings .avatar-wrapper .edit-avatar:hover {
+  opacity: 1;
+}
+.settings main section.account-settings > div.avatar-settings .avatar-wrapper input {
+  display: none;
+}
+.settings main section.center-alignment > div {
+  align-items: center;
+}
+.settings main section.center-alignment .left {
+  width: calc(100% - 90px);
+}
+.settings main section .settings-toggler {
+  background-color: #555555;
+  width: 60px;
+  height: 30px;
+  padding: 5px;
+  margin: 0 10px;
+  border-radius: 50px;
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.settings main section .settings-toggler::after {
+  content: "";
+  position: absolute;
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.settings main section .settings-toggler.active {
+  background-color: crimson;
+}
+.settings main section .settings-toggler.active::after {
+  transform: translateX(100%);
+}
+.settings main section .danger-btn {
+  background-color: #555555;
+  text-align: center;
+  width: 60px;
+  padding: 6px 0;
+  color: crimson;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.settings main section .danger-btn:hover {
+  color: white;
+  background-color: crimson;
+}
+.settings .edit-popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  background-color: #222222;
+  width: 260px;
+}
+.settings .edit-popup .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.settings .edit-popup .header i {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.settings .edit-popup .header i:hover {
+  opacity: 0.7;
+}
+.settings .edit-popup.input .repassword-input {
+  display: none;
+}
+.settings .edit-popup.input textarea {
+  display: none;
+}
+.settings .edit-popup.password textarea {
+  display: none;
+}
+.settings .edit-popup.textarea input {
+  display: none;
+}
+.settings .edit-popup input,
+.settings .edit-popup button,
+.settings .edit-popup textarea {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 5px;
+  color: white;
+}
+.settings .edit-popup input,
+.settings .edit-popup textarea {
+  background-color: transparent;
+  border-bottom: 1px solid white;
+  text-align: center;
+  margin: 0 16px;
+  margin-bottom: 16px;
+}
+.settings .edit-popup textarea {
+  resize: none;
+  height: 20px;
+  max-height: 300px;
+}
+.settings .edit-popup .error-field:not(:empty) {
+  margin-bottom: 16px;
+}
+.settings .edit-popup button {
+  background-color: crimson;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.settings .edit-popup button:hover {
+  opacity: 0.7;
+}
+
+.requests {
+  --accept-color: rgb(0, 190, 80);
+}
+.requests main {
+  width: 50%;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 50px;
+}
+.requests main .requests-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.requests main .requests-header h1 {
+  color: crimson;
+  font-size: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.requests main .requests-header h1 span[data-number] {
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(230, 230, 230, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.requests main .requests-header .btns button {
+  outline: none;
+  border: none;
+  padding: 4px 6px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.requests main .requests-header .btns button:hover {
+  opacity: 0.8;
+}
+.requests main .requests-header .btns button.accept-all {
+  background-color: var(--accept-color);
+  margin-right: 10px;
+}
+.requests main .requests-header .btns button.reject-all {
+  background-color: crimson;
+}
+.requests main .requests-content {
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+.requests main .requests-content .request {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 10px 0;
+  background-color: #2c2c2c;
+  padding: 12px;
+  border-radius: 8px;
+}
+.requests main .requests-content .request-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  text-decoration: none;
+  color: white;
+}
+.requests main .requests-content .request-info img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 6px;
+  overflow: hidden;
+}
+.requests main .requests-content .request-info img img {
+  width: 100%;
+}
+.requests main .requests-content .request-info p {
+  font-size: 26px;
+  font-weight: bold;
+}
+.requests main .requests-content .request .btns button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.requests main .requests-content .request .btns button.accept {
+  color: var(--accept-color);
+  margin-right: 10px;
+}
+.requests main .requests-content .request .btns button.reject {
+  color: crimson;
+}
+.requests main .requests-content .request .btns button:hover {
+  opacity: 0.8;
+}
+
+/*# sourceMappingURL=style.css.map */

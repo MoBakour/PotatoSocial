@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html class="profile" data-profile-id="<%= profile._id %>">
+    <%- include("./partials/head") %>
+    <body>
+        <!---->
+        <%- include("./partials/header") %>
+        <!---->
+        <% let profileAvatar = "./images/default-avatar.jpg"; %>
+        <!---->
+        <% if (profile.avatar) profileAvatar = `/image/${profile.avatar}`; %>
+        <!---->
+        <script>
+            const isSelfString =
+                "<%= locals.userId === profile._id ? 'true' : '' %>";
+            window.isSelf = !!isSelfString;
+        </script>
+        <main>
+            <div class="profile-cover">
+                <div class="avatar-wrapper">
+                    <div class="avatar">
+                        <img src="<%= profileAvatar %>" alt="User Avatar" />
+                    </div>
+                    <% if (locals.isSelf) { %>
+                    <label
+                        class="edit-avatar"
+                        for="avatarInput"
+                        title="Edit Avatar"
+                    >
+                        <i class="fa-solid fa-pen"></i>
+                    </label>
+                    <input
+                        type="file"
+                        class="avatar-input"
+                        id="avatarInput"
+                        accept="image/*"
+                    />
+                    <% } %>
+                </div>
+                <h1 class="profile-username"><%= profile.username %></h1>
+                <p class="account-birth">
+                    Since <span data-date="<%= profile.createdAt %>"></span>
+                </p>
+                <p class="account-followers">
+                    <span
+                        data-number="<%= profile.followers.length %>"
+                        class="followers-number"
+                    ></span>
+                    Followers
+                    <!---->
+                    <% if (profile.settings.lockFollows && profile._id ===
+                    locals.userId) { %>
+                    <a href="/requests">
+                        <i
+                            class="fa-solid fa-circle-exclamation requests-page-btn"
+                            title="Follow requests"
+                        ></i>
+                    </a>
+                    <% } %>
+                </p>
+                <div class="bio">
+                    <p><%= profile.bio %></p>
+                </div>
+
+                <% if (!locals.isSelf) { %>
+                <div class="follow <%= locals.followStatus %>">
+                    <button
+                        class="follow-btn"
+                        title="Follow <%= profile.username %>"
+                    >
+                        Follow
+                    </button>
+                    <button
+                        class="unfollow-btn"
+                        title="Unfollow <%= profile.username %>"
+                    >
+                        Unfollow
+                    </button>
+                    <button class="cancel-btn" title="Cancel Request">
+                        Cancel Request
+                    </button>
+                </div>
+                <% } %>
+            </div>
+
+            <%- include("./partials/posts") %>
+            <!---->
+            <%- include("./partials/confirmation") %>
+        </main>
+        <%- include("./partials/footer") %>
+
+        <!-- Scripts -->
+        <script src="./scripts/setAvatar.js" type="module"></script>
+        <script src="./scripts/follow.js" type="module"></script>
+    </body>
+</html>

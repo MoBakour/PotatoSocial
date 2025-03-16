@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" class="settings">
+    <%- include("./partials/head") %>
+    <body>
+        <%- include("./partials/header") %>
+        <!---->
+        <% const passLength = locals.user.password.length; %>
+        <!---->
+        <% const passStars = "".padStart(passLength, "*") %>
+        <!---->
+        <% let settingsAvatar = "./images/default-avatar.jpg"; %>
+        <!---->
+        <% let originalAvatar = locals.user.avatar; %>
+        <!---->
+        <% if (originalAvatar) settingsAvatar = `/image/${originalAvatar}`; %>
+
+        <main>
+            <section class="account-settings">
+                <h2>Account Settings</h2>
+                <div class="username-settings">
+                    <div class="left">
+                        <h3>Username</h3>
+                        <p><%= locals.user.username %></p>
+                    </div>
+                    <div
+                        class="right edit-btn edit-username-btn"
+                        title="Edit Username"
+                    >
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                </div>
+                <div class="email-settings">
+                    <div class="left">
+                        <h3>Email</h3>
+                        <p><%= locals.user.email %></p>
+                    </div>
+                    <div
+                        class="right edit-btn edit-email-btn"
+                        title="Edit Email"
+                    >
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                </div>
+                <div class="password-settings">
+                    <div class="left">
+                        <h3>Password</h3>
+                        <p><%= passStars %></p>
+                    </div>
+                    <div
+                        class="right edit-btn edit-password-btn"
+                        title="Edit Password"
+                    >
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                </div>
+                <div class="bio-settings">
+                    <div class="left">
+                        <h3>Profile Bio</h3>
+                        <p><%= locals.user.bio %></p>
+                    </div>
+                    <div class="right edit-btn edit-bio-btn" title="Edit Bio">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                </div>
+                <div class="avatar-settings">
+                    <h3>Avatar</h3>
+                    <div class="avatar-wrapper">
+                        <img src="<%= settingsAvatar %>" alt="User Avatar" />
+
+                        <label
+                            for="avatarInput"
+                            class="edit-avatar"
+                            title="Edit Avatar"
+                        >
+                            <i class="fa-solid fa-pen"></i>
+                        </label>
+                        <input
+                            type="file"
+                            id="avatarInput"
+                            class="avatar-input"
+                            accept="image/*"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <section class="privacy-settings center-alignment">
+                <h2>Privacy Settings</h2>
+                <div class="lock-comments">
+                    <div class="left">
+                        <h3>Lock Comments</h3>
+                        <p>
+                            Only your followers will be able to comment on your
+                            posts
+                        </p>
+                    </div>
+                    <div
+                        class="right settings-toggler"
+                        data-privacy-action="lockComments"
+                    ></div>
+                </div>
+                <div class="lock-posts">
+                    <div class="left">
+                        <h3>Lock Posts</h3>
+                        <p>
+                            Only your followers will be able to view your posts
+                        </p>
+                    </div>
+                    <div
+                        class="right settings-toggler"
+                        data-privacy-action="lockPosts"
+                    ></div>
+                </div>
+                <div class="lock-follows">
+                    <div class="left">
+                        <h3>Lock Follows</h3>
+                        <p>Only those who you admit can follow your account</p>
+                    </div>
+                    <div
+                        class="right settings-toggler"
+                        data-privacy-action="lockFollows"
+                    ></div>
+                </div>
+            </section>
+
+            <section class="danger-zone center-alignment">
+                <h2>Danger Zone</h2>
+                <div class="delete-comments">
+                    <div class="left">
+                        <h3>Delete Comments</h3>
+                        <p>
+                            Delete all your comments from all posts permanently
+                        </p>
+                    </div>
+                    <div
+                        class="right danger-btn"
+                        title="Delete comments"
+                        data-action="comments"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+                </div>
+                <div class="delete-posts">
+                    <div class="left">
+                        <h3>Delete Posts</h3>
+                        <p>Delete all your posts permanently</p>
+                    </div>
+                    <div
+                        class="right danger-btn"
+                        title="Delete posts"
+                        data-action="posts"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+                </div>
+                <div class="delete-account">
+                    <div class="left">
+                        <h3>Delete Account</h3>
+                        <p>Delete your account permanently</p>
+                    </div>
+                    <div
+                        class="right danger-btn"
+                        title="Delete account"
+                        data-action="account"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Handle Default Privacy Settings -->
+        <script>
+            const lockComments = "<%= locals.user.settings.lockComments %>";
+            const lockPosts = "<%= locals.user.settings.lockPosts %>";
+            const lockFollows = "<%= locals.user.settings.lockFollows %>";
+
+            document
+                .querySelectorAll(".privacy-settings .settings-toggler")
+                .forEach((btn) => {
+                    const action = btn.dataset.privacyAction;
+                    if (
+                        (action === "lockComments" &&
+                            lockComments === "true") ||
+                        (action === "lockPosts" && lockPosts === "true") ||
+                        (action === "lockFollows" && lockFollows === "true")
+                    ) {
+                        btn.classList.add("active");
+                    }
+                });
+        </script>
+
+        <!-- Edit Popup -->
+        <div class="edit-popup">
+            <div class="header">
+                <h2 class="edit-title"></h2>
+                <i class="fa-solid fa-xmark close-edit-popup"></i>
+            </div>
+            <input type="text" class="edit-input" />
+            <input
+                type="password"
+                class="repassword-input"
+                placeholder="Confirm password"
+            />
+            <textarea
+                class="edit-textarea"
+                placeholder="New bio"
+                maxlength="300"
+            ></textarea>
+            <p class="error-field"></p>
+            <button class="edit-submit">Edit</button>
+        </div>
+
+        <!-- Darken Effect -->
+        <div class="darken"></div>
+
+        <%- include("./partials/confirmation") %>
+        <!---->
+        <%- include("./partials/footer") %>
+
+        <!-- Script Files -->
+        <script src="./scripts/settings.js" type="module"></script>
+        <script src="./scripts/setAvatar.js" type="module"></script>
+    </body>
+</html>

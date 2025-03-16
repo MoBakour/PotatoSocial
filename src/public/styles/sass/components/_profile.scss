@@ -1,0 +1,137 @@
+@use "../assets/" as *;
+
+.profile {
+    &-cover {
+        @include flex($dir: column);
+
+        margin-top: 40px;
+
+        .avatar-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            .avatar {
+                @include avatar(100%);
+            }
+
+            .edit-avatar {
+                @include flex;
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(black, 0.6);
+                font-size: 40px;
+                border-radius: 50%;
+
+                transition: $transition;
+                opacity: 0;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .avatar-input {
+                display: none;
+            }
+        }
+
+        .profile-username {
+            padding-top: 10px;
+        }
+
+        .account-birth,
+        .account-followers {
+            padding: 5px;
+            color: rgba(white, 0.6);
+
+            .followers-number {
+                color: white;
+            }
+
+            .requests-page-btn {
+                color: $mainColor;
+                opacity: 0.8;
+                transition: $transition;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .bio {
+            @include flex($dir: column);
+
+            p:not(:empty) {
+                @extend %textWrap;
+                padding: 10px;
+                margin-top: 10px;
+                text-align: center;
+            }
+        }
+    }
+
+    .follow {
+        @include flex;
+
+        margin-top: 30px;
+
+        &.followed {
+            .unfollow-btn {
+                display: block;
+            }
+        }
+
+        &.unfollowed {
+            .follow-btn {
+                display: block;
+            }
+        }
+
+        &.pending {
+            .cancel-btn {
+                display: block;
+            }
+        }
+
+        button {
+            padding: 10px;
+            min-width: 140px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            color: white;
+            display: none;
+
+            transition: $transition;
+            cursor: pointer;
+
+            &.follow-btn {
+                background-color: darken(cyan, 14%);
+            }
+
+            &.unfollow-btn {
+                background-color: $mainColor;
+            }
+
+            &.cancel-btn {
+                background-color: rgb(226, 189, 0);
+            }
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}

@@ -1,0 +1,90 @@
+@use "../assets/" as *;
+
+header {
+    @include flex($just: space-evenly);
+
+    padding: 20px;
+    width: calc(100% - 40px);
+    margin: auto;
+
+    .flex-wrapper {
+        @include flex;
+        flex: 1;
+    }
+
+    .brand-name {
+        color: $mainColor;
+        text-decoration: none;
+    }
+
+    .search-bar {
+        background-color: white;
+        padding: 6px 8px;
+        border-radius: 6px;
+
+        input {
+            border: none;
+            outline: none;
+            font-size: 18px;
+        }
+
+        i {
+            color: black;
+        }
+    }
+
+    .current-user {
+        @include flex;
+
+        position: relative;
+        cursor: pointer;
+
+        .avatar {
+            @include avatar(50px, 6px);
+        }
+
+        p {
+            font-size: 18px;
+            user-select: none;
+        }
+
+        .menu {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: translateY(calc(100% + 10px));
+
+            width: 100%;
+            height: 0;
+            border-radius: 8px;
+            background-color: darken($bgColor, 3%);
+
+            z-index: 2;
+            overflow: hidden;
+            transition: $transition;
+
+            &.active {
+                height: 120px;
+            }
+
+            ul li {
+                list-style: none;
+
+                a {
+                    text-decoration: none;
+                    color: white;
+                    font-size: 16px;
+                    line-height: 20px;
+                    padding: 10px 0;
+                    display: block;
+                    text-align: center;
+                    transition: $transition;
+
+                    &:hover {
+                        background-color: darken($bgColor, 5%);
+                    }
+                }
+            }
+        }
+    }
+}

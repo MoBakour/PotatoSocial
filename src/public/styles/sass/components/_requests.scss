@@ -1,0 +1,122 @@
+@use "../assets/index" as *;
+
+.requests {
+    --accept-color: rgb(0, 190, 80);
+
+    main {
+        width: 50%;
+        max-width: 600px;
+        margin: auto;
+        margin-top: 50px;
+
+        .requests-header {
+            @include flex($just: space-between);
+
+            h1 {
+                color: $mainColor;
+                font-size: 40px;
+                position: relative;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+
+                span[data-number] {
+                    font-size: 15px;
+                    padding: 10px;
+                    border-radius: 20px;
+                    color: rgba(white, 0.4);
+                    background-color: darken(rgba(white, 0.4), 10%);
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            .btns {
+                button {
+                    outline: none;
+                    border: none;
+                    padding: 4px 6px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    border-radius: 4px;
+                    color: white;
+
+                    cursor: pointer;
+                    transition: $transition;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+
+                    &.accept-all {
+                        background-color: var(--accept-color);
+                        margin-right: 10px;
+                    }
+
+                    &.reject-all {
+                        background-color: $mainColor;
+                    }
+                }
+            }
+        }
+
+        .requests-content {
+            padding: 10px 20px;
+            margin-top: 20px;
+
+            .request {
+                @include flex($just: space-between);
+
+                margin: 10px 0;
+                background-color: lighten($bgColor, 4%);
+                padding: 12px;
+                border-radius: 8px;
+
+                &-info {
+                    @include flex;
+
+                    text-decoration: none;
+                    color: white;
+
+                    img {
+                        @include avatar(50px, 6px);
+                    }
+
+                    p {
+                        font-size: 26px;
+                        font-weight: bold;
+                    }
+                }
+
+                .btns {
+                    button {
+                        outline: none;
+                        border: none;
+                        background-color: transparent;
+                        font-size: 40px;
+
+                        cursor: pointer;
+                        transition: $transition;
+
+                        &.accept {
+                            color: var(--accept-color);
+                            margin-right: 10px;
+                        }
+
+                        &.reject {
+                            color: $mainColor;
+                        }
+
+                        &:hover {
+                            opacity: 0.8;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

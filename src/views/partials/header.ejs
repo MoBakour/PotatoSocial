@@ -1,0 +1,50 @@
+<header>
+    <div class="flex-wrapper">
+        <a href="/" class="brand-name"><h1>PotatoSocial</h1></a>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search" />
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+
+    <div class="flex-wrapper">
+        <div class="current-user">
+            <div class="avatar">
+                <img src="<%= locals.user.avatar ? "/image/" +
+                locals.user.avatar : './images/default-avatar.jpg' %>" alt="User
+                Avatar" />
+            </div>
+            <p><%= locals.user.username %></p>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="/<%= locals.user.username %>">Profile</a>
+                    </li>
+                    <li>
+                        <a href="/settings">Settings</a>
+                    </li>
+                    <li>
+                        <a href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menu = document.querySelector(".menu");
+        const menuBtn = document.querySelector(".current-user");
+
+        menuBtn.addEventListener("click", (e) => {
+            if (e.target === menu || menu.contains(e.target)) return false;
+            menu.classList.toggle("active");
+        });
+
+        window.addEventListener("click", (e) => {
+            if (e.target === menuBtn || menuBtn.contains(e.target))
+                return false;
+            menu.classList.remove("active");
+        });
+    </script>
+</header>

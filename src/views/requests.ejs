@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="requests">
+    <%- include("./partials/head") %>
+    <body>
+        <%- include("./partials/header") %>
+
+        <main>
+            <div class="requests-header">
+                <h1>
+                    <span>Requests</span
+                    ><span data-number="<%= requests.length %>"></span>
+                </h1>
+                <div class="btns">
+                    <button class="accept-all" data-response="accept">
+                        Accept All
+                    </button>
+                    <button class="reject-all" data-response="reject">
+                        Reject All
+                    </button>
+                </div>
+            </div>
+            <div class="requests-content">
+                <% requests.forEach(request => { %>
+                <div class="request" data-requester-id="<%= request.id %>">
+                    <a href="/<%= request.username %>" class="request-info">
+                        <img
+                            src="<%= request.avatar ? `/image/${request.avatar}` : '/images/default-avatar.jpg' %>"
+                            alt="User Avatar"
+                        />
+                        <p><%= request.username %></p>
+                    </a>
+                    <div class="btns">
+                        <button
+                            class="accept"
+                            title="Accept request"
+                            data-response="accept"
+                        >
+                            <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                        <button
+                            class="reject"
+                            title="Reject request"
+                            data-response="reject"
+                        >
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </main>
+
+        <!-- Script Files -->
+        <script src="./scripts/request.js" type="module"></script>
+    </body>
+</html>

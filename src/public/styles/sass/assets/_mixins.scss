@@ -1,0 +1,21 @@
+@mixin flex($just: center, $align: center, $dir: row, $wrap: nowrap) {
+    display: flex;
+    justify-content: $just;
+    align-items: $align;
+    flex-direction: $dir;
+    flex-wrap: $wrap;
+}
+
+@mixin avatar($size, $margin: 0) {
+    @include flex;
+
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    margin-right: $margin;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+    }
+}

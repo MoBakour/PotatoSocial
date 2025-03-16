@@ -1,0 +1,127 @@
+<div class="posts-wrapper">
+    <% if (currentPage == "home" || locals.userId === profile._id) { %>
+    <!-- Toggle Write Post Popup Button -->
+    <button class="post-popup-btn">
+        Share your thoughts! <i class="fa-solid fa-plus"></i>
+    </button>
+    <% } %>
+
+    <!-- Posts -->
+    <div class="posts">
+        <% posts.forEach(post => { %>
+        <!---->
+        <% let avatar = "./images/default-avatar.jpg"; %>
+        <!---->
+        <% if (post.avatar) avatar = `/image/${post.avatar}`; %>
+
+        <div class="post" data-post-id="<%= post._id %>">
+            <div class="post-header">
+                <a href="/<%= post.poster %>" class="poster-info">
+                    <div class="avatar">
+                        <img src="<%= avatar %>" alt="User Avatar" />
+                    </div>
+                    <p><%= post.poster %></p>
+                </a>
+                <p class="posted-at" data-date="<%= post.createdAt %>"></p>
+            </div>
+            <div class="post-content">
+                <p><%= post.postContent.text %></p>
+                <% if (post.postContent.file) { %>
+                <img
+                    src="/image/<%= post.postContent.file %>"
+                    alt="Post File"
+                />
+                <% } %>
+            </div>
+            <div class="post-footer">
+                <div class="reactions">
+                    <button
+                        class="likes post-btn-format <%= post.postLikes.includes(locals.userId) ? 'active' : '' %>"
+                    >
+                        <i class="fa-solid fa-thumbs-up"></i
+                        ><span
+                            data-number="<%= post.postLikes.length %>"
+                        ></span>
+                    </button>
+                    <button
+                        class="dislikes post-btn-format <%= post.postDislikes.includes(locals.userId) ? 'active' : '' %>"
+                    >
+                        <span
+                            data-number="<%= post.postDislikes.length %>"
+                        ></span
+                        ><i class="fa-solid fa-thumbs-down"></i>
+                    </button>
+                </div>
+                <button class="comments-btn post-btn-format">
+                    <span><%= post.commentsNumber %></span
+                    ><i class="fa-solid fa-comment"></i>
+                </button>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+
+    <!-- Comments Popup -->
+    <div class="comments popup-format">
+        <div class="comments-header popup-format-header">
+            <h4>
+                Comments on <a href="" class="comments-of-poster"></a>'s post
+            </h4>
+            <i class="fa-solid fa-xmark close-comments-btn"></i>
+        </div>
+        <div class="comments-list"><!-- Comments Here --></div>
+        <div class="comments-footer">
+            <div class="comment-input-section">
+                <textarea
+                    class="comment-input"
+                    placeholder="Type your comment"
+                ></textarea>
+                <button class="comment-publish">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+            <p class="disabled-msg">
+                Only <a href="" class="comments-of-poster"></a>'s followers can
+                comment
+            </p>
+        </div>
+    </div>
+
+    <!-- Write Post Popup -->
+    <div class="post-popup popup-format">
+        <div class="post-popup-header popup-format-header">
+            <h4>Publish new post</h4>
+            <i class="fa-solid fa-xmark close-post-popup-btn"></i>
+        </div>
+        <div class="post-popup-content">
+            <textarea
+                class="post-input"
+                placeholder="What's up your mind?"
+            ></textarea>
+            <div class="file-upload">
+                <label for="post-file-upload" class="post-file-upload-label"
+                    ><i class="fa-solid fa-plus"></i
+                ></label>
+                <input
+                    type="file"
+                    id="post-file-upload"
+                    class="post-file-upload"
+                    accept="image/*"
+                />
+                <img src="" alt="Uploaded Image" class="file-preview" />
+            </div>
+            <button class="publish-post-btn">Publish</button>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu">
+        <button tabindex="-1"></button>
+    </div>
+
+    <!-- Darken Effect -->
+    <div class="darken"></div>
+
+    <!-- Scripts -->
+    <script src="./scripts/posts.js" type="module"></script>
+</div>

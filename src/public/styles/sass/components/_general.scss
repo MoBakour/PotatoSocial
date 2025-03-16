@@ -1,0 +1,145 @@
+@use "../assets/" as *;
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Quicksand", "Almarai";
+}
+
+html,
+body {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: $bgColor;
+    color: white;
+    min-height: 100vh;
+}
+
+button:disabled {
+    pointer-events: none !important;
+    opacity: 0.4 !important;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+
+    &-thumb {
+        background-color: $mainColor;
+        border-radius: 3px;
+    }
+}
+
+// footer {
+// }
+
+// Darken Effect
+.darken {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(black, 0.6);
+    backdrop-filter: blur(3px);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+    opacity: 0;
+    transition: $transition;
+
+    &.active {
+        z-index: 3;
+        opacity: 1;
+    }
+}
+
+// Popup Format
+.popup-format {
+    @extend %popupFix;
+
+    width: 400px;
+    height: calc(80vh - 20px);
+    background-color: darken($bgColor, 2%);
+
+    &-header {
+        @include flex($just: space-between);
+        padding: 0 10px;
+        padding-bottom: 10px;
+
+        flex: 0 1 auto;
+
+        h4 a {
+            color: $mainColor;
+            text-decoration: none;
+            transition: $transition;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+
+        i {
+            font-size: 20px;
+            transition: $transition;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}
+
+// confirmation popup
+.confirmation-popup {
+    @extend %popupFix;
+
+    background-color: darken($bgColor, 2%);
+    width: 260px;
+
+    .content {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .btns {
+        @include flex($just: center);
+
+        button {
+            margin: 0 10px;
+            margin-top: 20px;
+            border: none;
+            outline: none;
+            padding: 6px;
+            border-radius: 6px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+
+            cursor: pointer;
+            transition: $transition;
+
+            &:hover {
+                opacity: 0.7;
+            }
+
+            &.confirm {
+                background-color: rgb(0, 126, 185);
+            }
+
+            &.disprove {
+                background-color: $mainColor;
+            }
+        }
+    }
+}
+
+// error field
+.error-field {
+    color: $mainColor;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}

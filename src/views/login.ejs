@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" class="login">
+    <%- include("./partials/head") %>
+    <body>
+        <h1>PotatoSocial</h1>
+        <form>
+            <h2>Login</h2>
+            <p class="error-field"></p>
+            <input
+                type="text"
+                name="username"
+                placeholder="Username or Email"
+            />
+            <input type="password" name="password" placeholder="Password" />
+            <button>Login</button>
+            <p>Have no account? <a href="/signup">Signup now!</a></p>
+        </form>
+
+        <!-- Scripts -->
+        <script src="./scripts/login.js" type="module"></script>
+    </body>
+</html>

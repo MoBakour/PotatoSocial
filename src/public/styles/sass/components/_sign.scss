@@ -1,0 +1,68 @@
+@use "../assets/" as *;
+
+.login,
+.signup {
+    body {
+        @include flex($dir: column);
+
+        h1 {
+            color: $mainColor;
+            font-size: 60px;
+            margin-bottom: 40px;
+        }
+
+        form {
+            @include flex($dir: column);
+
+            row-gap: 20px;
+            width: 300px;
+
+            h2 {
+                color: $mainColor;
+                font-size: 30px;
+                align-self: flex-start;
+            }
+
+            .error-field {
+                margin: -10px 0;
+
+                &:not(:empty) {
+                    font-weight: bold;
+                    background-color: lighten($mainColor, 30%);
+                    padding: 10px;
+                    width: calc(100% - 20px);
+                    text-align: center;
+                    border-radius: 5px;
+                    margin: 0;
+                }
+            }
+
+            input,
+            button {
+                padding: 10px;
+                font-size: 20px;
+                width: 100%;
+                box-sizing: border-box;
+                border: none;
+                outline: none;
+            }
+
+            button {
+                font-weight: bold;
+                text-transform: uppercase;
+                transition: $transition;
+                cursor: pointer;
+                background-color: $mainColor;
+                color: white;
+
+                &:hover {
+                    background-color: darken($mainColor, 10%);
+                }
+            }
+
+            a {
+                color: $mainColor;
+            }
+        }
+    }
+}

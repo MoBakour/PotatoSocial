@@ -1,0 +1,395 @@
+@use "../assets/" as *;
+
+.posts-wrapper {
+    width: 50%;
+    max-width: 600px;
+    margin: auto;
+    padding: 50px 0;
+}
+
+.posts {
+    .post {
+        width: calc(90% - 40px);
+
+        background-color: darken($bgColor, 3%);
+        border-radius: 10px;
+
+        margin: auto;
+        margin-bottom: 30px;
+        padding: 20px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &-header {
+            @include flex($just: space-between);
+
+            .poster-info {
+                @include flex;
+
+                color: white;
+                text-decoration: none;
+
+                width: fit-content;
+
+                .avatar {
+                    @include avatar(40px, 6px);
+                }
+
+                p {
+                    font-size: 18px;
+                }
+            }
+
+            .posted-at {
+                color: rgba(white, 0.6);
+            }
+        }
+
+        &-content {
+            p:not(:empty) {
+                @extend %textWrap;
+                font-size: 20px;
+                padding: 10px;
+            }
+
+            img {
+                width: calc(80% - 20px);
+                display: block;
+                margin: 10px auto;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+        }
+
+        &-footer {
+            @include flex($just: space-between);
+
+            font-size: 20px;
+
+            .reactions {
+                @include flex;
+
+                width: fit-content;
+            }
+
+            .post-btn-format {
+                border: none;
+                outline: none;
+
+                font-size: 20px;
+                background-color: transparent;
+                padding: 6px 10px;
+                border-radius: 6px;
+                margin: 0 10px;
+
+                cursor: pointer;
+                transition: $transition;
+
+                i {
+                    padding: 0 5px;
+                }
+
+                $colors: (
+                    "likes": #00b3ff,
+                    "dislikes": #ff7700,
+                    "comments-btn": #00ff00,
+                );
+
+                @each $key, $value in $colors {
+                    &.#{$key} {
+                        color: $value;
+
+                        &:hover {
+                            color: white;
+                            background-color: lighten($value, 20%);
+                        }
+
+                        &.active {
+                            color: white;
+                            background-color: lighten($value, 20%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Comments
+.comments {
+    @include flex($align: stretched, $dir: column);
+
+    &-list {
+        flex: 1 1 auto;
+
+        overflow: hidden auto;
+        scroll-behavior: smooth;
+
+        .comment {
+            background-color: darken($bgColor, 5%);
+            padding: 10px;
+            border-radius: 6px;
+
+            width: calc(100% - 30px);
+
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &-header {
+                @include flex;
+
+                width: fit-content;
+                color: white;
+                text-decoration: none;
+
+                .avatar {
+                    @include avatar(30px, 6px);
+                }
+            }
+
+            &-content {
+                p {
+                    @extend %textWrap;
+                    padding: 10px;
+                }
+            }
+
+            &-footer {
+                @include flex($just: flex-end);
+
+                color: rgba(white, 0.6);
+            }
+        }
+    }
+
+    &-footer {
+        flex: 0 1 auto;
+
+        width: calc(100% - 26px);
+        padding: 20px 0;
+        padding-bottom: 10px;
+        backdrop-filter: blur(10px);
+
+        .disabled-msg {
+            display: none;
+            text-align: center;
+            color: rgba(white, 0.6);
+
+            a {
+                color: $mainColor;
+                text-decoration: none;
+                transition: $transition;
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        .comment-input-section {
+            @include flex($just: space-evenly, $align: flex-end);
+        }
+
+        &.disabled-commenting {
+            .disabled-msg {
+                display: block;
+            }
+
+            .comment-input-section {
+                display: none;
+            }
+        }
+
+        textarea,
+        button {
+            border: none;
+            outline: none;
+
+            height: 30px;
+            font-size: 20px;
+
+            display: block;
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+
+        textarea {
+            box-sizing: border-box;
+
+            background-color: darken($bgColor, 5%);
+            color: white;
+
+            width: 70%;
+
+            min-height: 30px;
+            max-height: 114px;
+            line-height: 30px;
+
+            resize: none;
+        }
+
+        button {
+            box-sizing: content-box;
+
+            background-color: $mainColor;
+            color: white;
+            cursor: pointer;
+            transition: $transition;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}
+
+// Post Popup Button
+.post-popup-btn {
+    border: none;
+    outline: none;
+    border-radius: 10px;
+
+    display: block;
+    margin: auto;
+    margin-bottom: 40px;
+    padding: 12px;
+
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: $mainColor;
+
+    transition: $transition;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+// Post Popup
+.post-popup {
+    height: auto;
+    padding-bottom: 20px;
+
+    &-content {
+        @include flex($dir: column);
+
+        textarea,
+        button {
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .post-input {
+            width: 80%;
+            background-color: darken($bgColor, 5%);
+            resize: none;
+            min-height: 120px;
+            font-size: 20px;
+        }
+
+        .file-upload {
+            @include flex($just: space-between);
+
+            margin: 30px 0;
+
+            .post-file-upload-label {
+                @include flex;
+
+                background-color: transparent;
+                border: 3px solid white;
+                font-size: 60px;
+                width: 140px;
+                height: 140px;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: $transition;
+
+                &.asided {
+                    transform: scale(0.5);
+                }
+
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+
+            .post-file-upload {
+                display: none;
+            }
+
+            .file-preview {
+                width: 160px;
+                border-radius: 10px;
+                display: none;
+
+                &.active {
+                    display: block;
+                }
+            }
+        }
+
+        .publish-post-btn {
+            background-color: $mainColor;
+            font-weight: bold;
+            font-size: 22px;
+            cursor: pointer;
+            transition: $transition;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}
+
+// Context Menu
+.context-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: darken($bgColor, 5%);
+    border-radius: 10px;
+    overflow: hidden;
+
+    opacity: 0;
+    pointer-events: none;
+    z-index: 4;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    button {
+        border: none;
+        outline: none;
+
+        box-sizing: border-box;
+        width: 100%;
+        display: block;
+        background-color: transparent;
+
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        padding: 10px;
+
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+            background-color: darken($bgColor, 3%);
+        }
+    }
+}

@@ -1,0 +1,30 @@
+$transition: all 0.3s ease;
+$bgColor: #222222;
+$mainColor: crimson;
+
+%textWrap {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+%popupFix {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% - 60px)) scale(0.9);
+
+    padding: 10px;
+    border-radius: 10px;
+
+    z-index: 4;
+    transition: $transition;
+
+    opacity: 0;
+    pointer-events: none;
+
+    &.active {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
