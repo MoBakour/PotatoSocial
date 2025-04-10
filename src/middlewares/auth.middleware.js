@@ -27,14 +27,27 @@ function authenticate(req, res, next) {
     } else next();
 }
 
-function setToken(res, userId) {
+async function setToken(res, userId) {
     const minimumExpiry = 60 * 60 * 24 * 14;
-    const token = jwt.sign({ id: userId }, SECRET, {
-        expiresIn: minimumExpiry,
-    });
-    res.cookie("token", token, {
-        maxAge: minimumExpiry * 1000,
-        httpOnly: true,
+
+    return new Promise((res, rej) => {
+        jwt.sign(
+            { id: userId },
+            SECRET,
+            {
+                expiresIn: minimumExpiry,
+            },
+            (err, token) => {
+                if (err) rej(err);
+                else {
+                    res.cookie("token", token, {
+                        maxAge: minimumExpiry * 1000,
+                        httpOnly: true,
+                    });
+                    res();
+                }
+            }
+        );
     });
 }
 
